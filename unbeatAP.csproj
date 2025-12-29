@@ -33,5 +33,19 @@
     <Reference Include="FMODUnity">
       <HintPath>lib\FMODUnity.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="Patches\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\songs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

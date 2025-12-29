@@ -1,6 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
+using Arcade.Progression;
+using UNBEATAP.Patches;
 
 namespace UNBEATAP;
 
@@ -18,7 +20,15 @@ public class Plugin : BaseUnityPlugin
     {
         // Plugin startup logic
         Logger = base.Logger;
-
+        //Harmony.CreateAndPatchAll(typeof(ArcadeSongView));
+        Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
+        Harmony.CreateAndPatchAll(typeof(UnlockAll));
         Logger.LogInfo($"Plugin {PluginReleaseInfo.PLUGIN_GUID} is loaded!");
+        
+    }
+
+    private void Start()
+    {
+        Logger.LogInfo($"UnlockAll state: {MainProgressionContainer.UnlockAll}");
     }
 }
