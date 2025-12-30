@@ -3,6 +3,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using Arcade.Progression;
 using UNBEATAP.Patches;
+using UNBEATAP.Traps;
 using UnityEngine.SceneManagement;
 
 namespace UNBEATAP;
@@ -24,6 +25,7 @@ public class Plugin : BaseUnityPlugin
         //Harmony.CreateAndPatchAll(typeof(ArcadeDifficultyView));
         Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
         Harmony.CreateAndPatchAll(typeof(UnlockAll));
+        Harmony.CreateAndPatchAll(typeof(FadeTrap));
         Logger.LogInfo($"Plugin {PluginReleaseInfo.PLUGIN_GUID} is loaded!");
     }
 
@@ -37,6 +39,7 @@ public class Plugin : BaseUnityPlugin
 
     private void GetSceneChange(Scene arg0, Scene arg1)
     {
+        //TrainStationRhythm is the in-game scene
         //Logger.LogInfo($"Scene {arg1.name} is loaded!");
         if(arg1.name == "ScoreScreenArcadeMode")
         {
