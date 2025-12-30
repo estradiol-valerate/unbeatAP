@@ -1,30 +1,27 @@
-using System;
 using HarmonyLib;
 using Arcade.Progression;
 using Rhythm;
 using UNBEATAP.Helpers;
 
-namespace UNBEATAP.Patches
+namespace UNBEATAP.Patches;
+
+public class ArcadeSongView
 {
-    public class ArcadeSongView
+    // This patch hides all the songs from the arcade list unless you have set in SongList
+    [HarmonyPatch(typeof(SongUnlocksManager), "GetSongState")]
+    [HarmonyPrefix]
+    static bool GetSongStatePatch(ref bool __result, BeatmapIndex.Song song)
     {
-        // This patch hides all the songs from the arcade list unless you have set in SongList
-        [HarmonyPatch(typeof(SongUnlocksManager), "GetSongState")]
-        [HarmonyPrefix]
-        static bool GetSongStatePatch(ref bool __result, BeatmapIndex.Song song)
+        foreach(string unlock in SongList.GetSongs())
         {
-            SongList songList = SongList.GetInstance();
-                
-            foreach (String unlock in songList.GetSongs())
+            if(song.name.ToLower() == unlock)
             {
-                if (song.name.ToLower() == unlock)
-                {
-                    __result = true;
-                    return true;
-                }
-            }
-            __result = false;
-            return false;
+                __result = true;
+                return true;
             }
         }
+        
+        __result = false;
+        return false;
     }
+}

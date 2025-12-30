@@ -1,9 +1,7 @@
-﻿using System;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 using Arcade.Progression;
-using UNBEATAP.Helpers;
 using UNBEATAP.Patches;
 using UnityEngine.SceneManagement;
 
@@ -15,9 +13,7 @@ public class Plugin : BaseUnityPlugin
 {
     internal static new ManualLogSource Logger;
 
-    public static float MaxScheduleOffset => RhythmConsts.LeniencyMilliseconds + 20f;
-    public static float MinScheduleOffset = 20f;
-    
+
     private void Awake()
     {
         // Plugin startup logic
@@ -31,11 +27,13 @@ public class Plugin : BaseUnityPlugin
         Logger.LogInfo($"Plugin {PluginReleaseInfo.PLUGIN_GUID} is loaded!");
     }
 
+
     private void Start()
     {
         Logger.LogInfo($"UnlockAll state: {MainProgressionContainer.UnlockAll}");
         SceneManager.activeSceneChanged += GetSceneChange;
     }
+
 
     private void GetSceneChange(Scene arg0, Scene arg1)
     {

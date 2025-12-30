@@ -1,10 +1,11 @@
 using Rhythm;
+
 namespace UNBEATAP.Helpers;
 
 public class RhythmManager
 {
-    RhythmController controller = RhythmController.Instance;
-    RhythmConsts constants = RhythmConsts.Instance;
+    RhythmController controller => RhythmController.Instance;
+    RhythmConsts constants => RhythmConsts.Instance;
 
     // None of this has been implemented properly yet, but all of this does work
     
@@ -16,6 +17,7 @@ public class RhythmManager
         bool nofail = controller.noFail;
     }
 
+
     public void GetScoreInfo()
     {
         bool fc = controller.song.missCount == 0;
@@ -26,12 +28,11 @@ public class RhythmManager
         string rank2 = rank.grade.ToString();
     }
 
+
     public void GetBeatmapInfo()
     {
         string maptitle = controller.beatmap.metadata.title;
         float songlength = controller.beatmap.metadata.tagData.SongLength;
         int songRating = controller.beatmap.metadata.tagData.Level;
     }
-
-
 }

@@ -1,22 +1,19 @@
-using System;
 using System.Collections.Generic;
 
 namespace UNBEATAP.Helpers;
 
-public class CharacterList
+public static class CharacterList
 {
-    private static CharacterList _instance = new CharacterList();
-    public static CharacterList GetInstance()
-    {
-        return _instance;
-    }
-    private List<String> characters = new List<String>();
-    public void AddCharacter(String character)
+    private static List<string> characters = new List<string>();
+
+
+    public static void AddCharacter(string character)
     {
         characters.Add(character.ToLower());
     }
 
-    public List<String> GetCharacters()
+
+    public static List<string> GetCharacters()
     {
         return characters;
     }

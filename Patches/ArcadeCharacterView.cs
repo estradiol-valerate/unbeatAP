@@ -1,4 +1,3 @@
-using System;
 using Arcade.Progression;
 using Arcade.Unlockables;
 using HarmonyLib;
@@ -12,8 +11,7 @@ public class ArcadeCharacterView
     [HarmonyPrefix]
     static bool GetCharacterStatePatch(ref bool __result, CharacterIndex.Character character)
     {
-        CharacterList characterList = CharacterList.GetInstance();
-        foreach(String unlock in characterList.GetCharacters())
+        foreach(string unlock in CharacterList.GetCharacters())
         {
             if(character.name.ToLower() == unlock)
             {

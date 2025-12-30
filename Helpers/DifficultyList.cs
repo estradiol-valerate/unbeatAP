@@ -1,38 +1,37 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json.Linq;
 
 namespace UNBEATAP.Helpers;
 
-public class DifficultyList
+public static class DifficultyList
 {
-    private List<String> diffs = new List<String>();
-    private static DifficultyList _instance = new DifficultyList();
-    public static DifficultyList GetInstance()
-    {
-        return _instance;
-    }
-    private List<String> difficulties = new List<String>();
-    public void AddDifficulty(String song, String difficulty)
+    private static List<string> diffs = new List<string>();
+    
+    private static List<string> difficulties = new List<string>();
+
+
+    public static void AddDifficulty(string song, string difficulty)
     {
         difficulties.Add($"{song}/{difficulty}");
     }
 
-    public List<String> GetDifficulties()
+
+    public static List<string> GetDifficulties()
     {
         return difficulties;
     }
     
-    public List<String> ValidDifficulties(string songName)
+
+    public static List<string> Init(string songName)
     {
         diffs.Clear();
         // This expects the mod to be in UNBEATABLE/BepInEx/plugins/unbeatAP, and the Assets folder with difficulties.json to be next to it.
-        var name = File.ReadAllText("BepInEx/plugins/unbeatAP/Assets/difficulties.json");
-        var data = JObject.Parse(name);
-        foreach(String diff in data[songName])
+        string json = File.ReadAllText("BepInEx/plugins/unbeatAP/Assets/difficulties.json");
+        JObject data = JObject.Parse(json);
+        foreach(JToken diff in data[songName])
         {
-            diffs.Add(diff);
+            diffs.Add((string)diff);
         }
         return diffs;
     }

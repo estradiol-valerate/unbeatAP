@@ -1,4 +1,3 @@
-using System;
 using Arcade.Progression;
 using HarmonyLib;
 using UNBEATAP.Helpers;
@@ -11,10 +10,9 @@ public class ArcadeDifficultyView
     [HarmonyPrefix]
     static bool GetDifficultyUnlockPatch(ref bool __result, string songName, string selectedDifficulty)
     {
-        String songname2 = songName.ToLower();
-        String diffname2 = selectedDifficulty.ToLower();
-        DifficultyList difficultyList = DifficultyList.GetInstance();
-        foreach(String difficulty in difficultyList.GetDifficulties())
+        string songname2 = songName.ToLower();
+        string diffname2 = selectedDifficulty.ToLower();
+        foreach(string difficulty in DifficultyList.GetDifficulties())
         {
             if(difficulty.ToLower() == $"{songname2}/{diffname2}")
             {
