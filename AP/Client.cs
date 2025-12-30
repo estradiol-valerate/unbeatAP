@@ -60,20 +60,19 @@ public class Client
         if(!result.Successful)
         {
             LoginFailure failure = (LoginFailure)result;
-            string message = $"Failed to connect to {ip} as {slot}:";
+            string message = $"Failed to connect to {ip}:{port} as {slot}:";
             foreach(string error in failure.Errors)
             {
-                message += $"\n    {error}";
+                message += $"\n    - {error}";
             }
             foreach(ConnectionRefusedError error in failure.ErrorCodes)
             {
-                message += $"\n    {error}";
+                message += $"\n    - {error}";
             }
 
             Plugin.Logger.LogError(message);
             Connected = false;
         }
-
-        Connected = true;
+        else Connected = true;
     }
 }

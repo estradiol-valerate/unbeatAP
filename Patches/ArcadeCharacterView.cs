@@ -11,6 +11,11 @@ public class ArcadeCharacterView
     [HarmonyPrefix]
     static bool GetCharacterStatePatch(ref bool __result, CharacterIndex.Character character)
     {
+        if(!Plugin.Client.Connected)
+        {
+            return true;
+        }
+
         foreach(string unlock in CharacterList.GetCharacters())
         {
             if(character.name.ToLower() == unlock)

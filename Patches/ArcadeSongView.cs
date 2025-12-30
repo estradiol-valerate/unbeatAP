@@ -12,6 +12,11 @@ public class ArcadeSongView
     [HarmonyPrefix]
     static bool GetSongStatePatch(ref bool __result, BeatmapIndex.Song song)
     {
+        if(!Plugin.Client.Connected)
+        {
+            return true;
+        }
+
         foreach(string unlock in SongList.GetSongs())
         {
             if(song.name.ToLower() == unlock)
