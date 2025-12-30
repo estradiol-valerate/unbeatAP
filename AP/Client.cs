@@ -10,7 +10,7 @@ namespace UNBEATAP.AP;
 
 public class Client
 {
-    public bool Connected = false;
+    public bool Connected { get; private set; }
 
     public ArchipelagoSession Session;
 
