@@ -10,16 +10,18 @@ public class ArcadeDifficultyView
     [HarmonyPrefix]
     static bool GetDifficultyUnlockPatch(ref bool __result, string songName, string selectedDifficulty)
     {
-        string songname2 = songName.ToLower();
-        string diffname2 = selectedDifficulty.ToLower();
-        foreach(string difficulty in DifficultyList.GetDifficulties())
+        if(!Plugin.Client.Connected)
         {
-            if(difficulty.ToLower() == $"{songname2}/{diffname2}")
-            {
-                __result = true;
-                return true;
-            }
+            return true;
         }
+
+        string fullName = $"{songName.ToLower()}{DifficultyList.NameSeparator}{selectedDifficulty.ToLower()}";
+        if(DifficultyList.GetDifficulties().Contains(fullName))
+        {
+            __result = true;
+            return true;
+        }
+
         __result = false;
         return false;
     }

@@ -10,6 +10,9 @@ public class UnlockAll
     [HarmonyPostfix]
     static void unlockAll(ref bool __result)
     {
-        __result = true;
+        if(Plugin.Client.Connected)
+        {
+            __result = true;
+        }
     }
 }

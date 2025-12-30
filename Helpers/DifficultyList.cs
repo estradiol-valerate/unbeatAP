@@ -1,38 +1,97 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace UNBEATAP.Helpers;
 
 public static class DifficultyList
 {
-    private static List<string> diffs = new List<string>();
-    
-    private static List<string> difficulties = new List<string>();
+    public const string NameSeparator = "|";
 
+    private static Dictionary<string, string[]> diffDict;
+    private static Dictionary<string, string> songDict;
 
-    public static void AddDifficulty(string song, string difficulty)
-    {
-        difficulties.Add($"{song}/{difficulty}");
-    }
+    private static List<string> currentDifficulties = new List<string>();
 
 
     public static List<string> GetDifficulties()
     {
-        return difficulties;
+        return currentDifficulties;
+    }
+
+
+    private static void AddDifficulty(string song, string difficulty)
+    {
+        currentDifficulties.Add($"{song}{NameSeparator}{difficulty}");
+    }
+
+
+    private static string GetInternalName(string songName)
+    {
+        if(songDict == null)
+        {
+            return null;
+        }
+
+        return songDict[songName].ToLower();
+    }
+
+
+    public static bool TryAddSongItem(string songName, int diffIndex)
+    {
+        string internalName = GetInternalName(songName);
+        
+        if(!diffDict.TryGetValue(internalName, out string[] difficulties))
+        {
+            Plugin.Logger.LogWarning($"Failed to get difficulties for song: {internalName}");
+            return false;
+        }
+
+        if(difficulties.Length <= diffIndex)
+        {
+            int extraDiffs = diffIndex - difficulties.Length + 1;
+            Plugin.Logger.LogWarning($"Received {extraDiffs} extra difficult(y)(ies) for song: {internalName}");
+            return false;
+        }
+
+        string newDifficulty = difficulties[diffIndex];
+        AddDifficulty(internalName, newDifficulty);
+        return true;
+    }
+
+
+    private static async Task LoadDifficulties()
+    {
+        const string diffFile = "difficulties.json";
+
+        string diffPath = Path.Combine(Plugin.AssetsFolder, diffFile);
+        string json = await File.ReadAllTextAsync(diffPath);
+        diffDict = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(json);
+    }
+
+
+    private static async Task LoadSongs()
+    {
+        const string songFile = "songs.json";
+
+        string songPath = Path.Combine(Plugin.AssetsFolder, songFile);
+        string json = await File.ReadAllTextAsync(songPath);
+        songDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
     }
     
 
-    public static List<string> Init(string songName)
+    public static async Task Init()
     {
-        diffs.Clear();
-        // This expects the mod to be in UNBEATABLE/BepInEx/plugins/unbeatAP, and the Assets folder with difficulties.json to be next to it.
-        string json = File.ReadAllText("BepInEx/plugins/unbeatAP/Assets/difficulties.json");
-        JObject data = JObject.Parse(json);
-        foreach(JToken diff in data[songName])
+        try
         {
-            diffs.Add((string)diff);
+            await LoadDifficulties();
+            await LoadSongs();
         }
-        return diffs;
+        catch(Exception e)
+        {
+            Plugin.Logger.LogError($"Failed to load assets with error: {e.Message}, {e.StackTrace}");
+        }
     }
 }

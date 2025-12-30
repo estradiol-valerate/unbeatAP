@@ -1,10 +1,11 @@
-﻿using BepInEx;
+﻿using System;
+using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using Arcade.Progression;
 using UNBEATAP.Patches;
-using UNBEATAP.Traps;
-using UnityEngine.SceneManagement;
+using UNBEATAP.AP;
+using BepInEx.Configuration;
+using UNBEATAP.Helpers;
 
 namespace UNBEATAP;
 
@@ -12,38 +13,104 @@ namespace UNBEATAP;
 [BepInProcess("UNBEATABLE.exe")]
 public class Plugin : BaseUnityPlugin
 {
+    public const string GameName = "UNBEATABLE Arcade";
+    public const string PluginFolder = "BepInEx/plugins/unbeatAP";
+    public static readonly string AssetsFolder = PluginFolder + "/Assets";
+    public static readonly string SaveFolder = PluginFolder + "/Saves";
+
     internal static new ManualLogSource Logger;
 
+    public static Client Client;
 
-    private void Awake()
+    private ConfigEntry<string> configIp;
+    private ConfigEntry<int> configPort;
+    private ConfigEntry<string> configSlot;
+    private ConfigEntry<string> configPassword;
+
+    private ConfigEntry<bool> configDeathLink;
+
+
+    private void LoadConfig()
     {
-        // Plugin startup logic
-        Logger = base.Logger;
-        // ArcadeSongView seems pretty useless if ArcadeDifficultyView is enabled, maybe it can be unpatched on archipelago connection?
-        //Harmony.CreateAndPatchAll(typeof(ArcadeSongView));
-        //Harmony.CreateAndPatchAll(typeof(ArcadeCharacterView));
-        //Harmony.CreateAndPatchAll(typeof(ArcadeDifficultyView));
-        Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
-        Harmony.CreateAndPatchAll(typeof(UnlockAll));
-        Harmony.CreateAndPatchAll(typeof(FadeTrap));
-        Logger.LogInfo($"Plugin {PluginReleaseInfo.PLUGIN_GUID} is loaded!");
+        configIp = Config.Bind(
+            "Connection",
+            "IP",
+            "archipelago.gg",
+            "The archipelago server IP to connect to. If you're running the game on the official website, this is probably 'archipelago.gg'."
+        );
+        configPort = Config.Bind(
+            "Connection",
+            "Port",
+            58008,
+            "The port to connect to. This is all the numbers after the ':' in the IP."
+        );
+        configSlot = Config.Bind(
+            "Connection",
+            "Slot",
+            "Player1",
+            "The player slot name to connect with. Enter what you set 'name' to in your YAML."
+        );
+        configPassword = Config.Bind(
+            "Connection",
+            "Password",
+            "",
+            "The password to use when connecting. If the server has no password, leave this empty."
+        );
+
+        configDeathLink = Config.Bind(
+            "Gameplay",
+            "DeathLink",
+            false,
+            "If Death Link is enabled, you'll fail out of a song if someone else dies, and everyone else will die when you fail a song."
+        );
     }
 
 
-    private void Start()
+    private async void Awake()
     {
-        Logger.LogInfo($"UnlockAll state: {MainProgressionContainer.UnlockAll}");
-        SceneManager.activeSceneChanged += GetSceneChange;
-    }
-
-
-    private void GetSceneChange(Scene arg0, Scene arg1)
-    {
-        //TrainStationRhythm is the in-game scene
-        //Logger.LogInfo($"Scene {arg1.name} is loaded!");
-        if(arg1.name == "ScoreScreenArcadeMode")
+        try
         {
-            // Can use things from Helpers.RhythmManager when implemented
+            // Plugin startup logic
+            Logger = base.Logger;
+
+            Logger.LogInfo("Loading config.");
+            LoadConfig();
+
+            Logger.LogInfo("Loading assets.");
+            await DifficultyList.Init();
+
+            // Logger.LogInfo("Creating objects.");
+            // SaveHandler.Init();
+
+            Logger.LogInfo("Setting up client.");
+            Client = new Client(configIp.Value, configPort.Value, configSlot.Value, configPassword.Value, configDeathLink.Value);
+            await Client.ConnectAndGetData();
+
+            if(!Client.Connected)
+            {
+                Logger.LogWarning($"Failed to connect to archipelago! Stopping.");
+                return;
+            }
+
+            Logger.LogInfo("Applying patches.");
+            try
+            {
+                Harmony.CreateAndPatchAll(typeof(ArcadeCharacterView));
+                Harmony.CreateAndPatchAll(typeof(ArcadeDifficultyView));
+                Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
+                Harmony.CreateAndPatchAll(typeof(UnlockAll));
+            }
+            catch(Exception e)
+            {
+                Logger.LogFatal($"Patching failed with error: {e.Message}, {e.StackTrace}");
+                return;
+            }
+
+            Logger.LogInfo($"Plugin {PluginReleaseInfo.PLUGIN_GUID} is loaded!");
+        }
+        catch(Exception e)
+        {
+            Logger.LogFatal($"{e.Message}, {e.StackTrace}");
         }
     }
 }

@@ -1,617 +1,617 @@
 {
-    "RETUNED AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "retuned ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "PROPER RHYTHM TUTORIAL": [
-        "Beginner"
+    "proper rhythm tutorial": [
+        "beginner"
     ],
-    "Waiting": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "waiting": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "DIALTONE AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "dialtone ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "MEMORIZED": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "memorized": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "yeahx6": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "LONER": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "loner": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Sleeping In": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "sleeping in": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "NO SIGNAL": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "no signal": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "FOREVER NOW": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "forever now": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "PROPERRHYTHM": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "properrhythm": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Stolen": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "stolen": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "EMPTY DIARY": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "empty diary": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Future People": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "future people": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "WOT ROCK": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "wot rock": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Mirror": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "mirror": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "BookendSong AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "bookendsong ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "BookendSongOpeningVer": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "bookendsongopeningver": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "PLASTIC HAMMER": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "plastic hammer": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "BANG": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "bang": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
     "forgetter": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "COOL FINAL": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "cool final": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "c2_dream1": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "c2_dream2": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "c2_dream3": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "dreamfade": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Eating Is Living": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "eating is living": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Cop Trauma": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "cop trauma": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "ch4_dream1": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "ch4_dream2": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "HARM ASSAULT AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "harm assault ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "proper rhythm zflip": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "ZERO MOMENT AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "zero moment ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
     "rest v beat part 1": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "beat v rest pt 2 ac": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "SILENT SPIRAL AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "silent spiral ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "PRONTO A MOLTO AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "pronto a molto ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Infinity Chase AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "infinity chase ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "It's Whacktime": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "it's whacktime": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Ball Is Infinite": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "ball is infinite": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "SWING": [
-        "Star"
+    "swing": [
+        "star"
     ],
-    "Motherbound": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "motherbound": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "Neo Elsewhere": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "neo elsewhere": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Malapropism": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "malapropism": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "yeahx6radio": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "FOREVER WHEN": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "forever when": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "WORNOUTTAPES": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "wornouttapes": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "BLANK PAGE": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "blank page": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "PLASTIC HAMMER REINTRO AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "plastic hammer reintro ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "WAR DEN AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "war den ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "DRASTIC HAMMER AC": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "drastic hammer ac": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "EMPTY DIARY DANTE": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "empty diary dante": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "PROPERRHYTHM MUST DIE": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "properrhythm must die": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "PROPERRHYTHM BOOTLEG": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "properrhythm bootleg": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "Forever Now - DOG_NOISE Remix": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "forever now - dog_noise remix": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "Familiar - Brandon Liew Remix": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "familiar - brandon liew remix": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "Mirror - Kamome Sano Remix": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "mirror - kamome sano remix": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Waiting Lumena": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "waiting lumena": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "Familiar Live": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "familiar live": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Proper Rhythm Live": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "proper rhythm live": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Loner Live": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "loner live": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "WAITING LIVE": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "waiting live": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Familiar Acoustic": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "familiar acoustic": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "lessthan3": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Low": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "low": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "NOISZ - True": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "noisz - true": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "True - Full": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "true - full": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "NOISZ - Done In Love": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "noisz - done in love": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "Done In Love Full": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "done in love full": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "Twist Sound": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "twist sound": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "K Moe": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "k moe": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "Cosmic Starter": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "cosmic starter": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Disco Disaster": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "disco disaster": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Om and On": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "om and on": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "AFTERBURN": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "afterburn": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "AFTERBURNER": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "afterburner": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
     "goin crazy": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "SQUARE UP": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "square up": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "binary reasoning": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "hotelroom215": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ],
-    "Dear Diary": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "dear diary": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "FORWARD OPERATING BASS": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "forward operating bass": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Welcome to Slamtown": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+    "welcome to slamtown": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
     "ababkababbab": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE"
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable"
     ],
-    "Misery Index": [
-        "Beginner",
-        "Easy",
-        "Normal",
-        "Hard",
-        "UNBEATABLE",
-        "Star"
+    "misery index": [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
     ]
 }

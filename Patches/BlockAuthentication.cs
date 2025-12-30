@@ -10,6 +10,11 @@ public class BlockAuthentication
     [HarmonyPrefix]
     static bool BlockAuthenticationPatch(ref Task<bool> __result)
     {
+        if(!Plugin.Client.Connected)
+        {
+            return true;
+        }
+
         __result = Task.FromResult(false);
         return false;
     }
