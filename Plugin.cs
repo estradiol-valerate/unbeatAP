@@ -99,6 +99,7 @@ public class Plugin : BaseUnityPlugin
                 Harmony.CreateAndPatchAll(typeof(ArcadeDifficultyView));
                 Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
                 Harmony.CreateAndPatchAll(typeof(UnlockAll));
+                Harmony.CreateAndPatchAll(typeof(FadeTrap));
             }
             catch(Exception e)
             {
