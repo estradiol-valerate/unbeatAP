@@ -38,7 +38,7 @@ public class Client
     }
 
 
-    private void HandleReceiveItem(IReceivedItemsHelper helper)
+    private void HandleItemReceive(IReceivedItemsHelper helper)
     {
         ItemInfo item = helper.PeekItem();
         string name = item.ItemName;
@@ -63,7 +63,7 @@ public class Client
     {
         while(Session.Items.Any())
         {
-            HandleReceiveItem(Session.Items);
+            HandleItemReceive(Session.Items);
         }
     }
 
@@ -119,5 +119,7 @@ public class Client
 
         await GetStoredItems();
         GetQueuedItems();
+
+        Session.Items.ItemReceived += HandleItemReceive;
     }
 }
