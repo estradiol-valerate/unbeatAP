@@ -2,8 +2,10 @@
 using BepInEx.Logging;
 using HarmonyLib;
 using UNBEATAP.Patches;
-using unbeatAP.AP;
+using UNBEATAP.AP;
 using BepInEx.Configuration;
+using System;
+using UNBEATAP.Helpers;
 
 namespace UNBEATAP;
 
@@ -12,6 +14,7 @@ namespace UNBEATAP;
 public class Plugin : BaseUnityPlugin
 {
     public const string GameName = "UNBEATABLE Arcade";
+    public const string AssetsFolder = "BepInEx/plugins/unbeatAP/Assets";
 
     internal static new ManualLogSource Logger;
 
@@ -68,16 +71,26 @@ public class Plugin : BaseUnityPlugin
 
         LoadConfig();
 
-        Client = new Client(configIp.Value, configPort.Value, configSlot.Value, configPassword.Value, configDeathLink.Value);
-        await Client.Connect();
+        await DifficultyList.Init();
 
-        Logger.LogInfo("Patching");
-        // ArcadeSongView seems pretty useless if ArcadeDifficultyView is enabled, maybe it can be unpatched on archipelago connection?
-        // Harmony.CreateAndPatchAll(typeof(ArcadeSongView));
-        // Harmony.CreateAndPatchAll(typeof(ArcadeCharacterView));
-        // Harmony.CreateAndPatchAll(typeof(ArcadeDifficultyView));
-        Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
-        Harmony.CreateAndPatchAll(typeof(UnlockAll));
+        Client = new Client(configIp.Value, configPort.Value, configSlot.Value, configPassword.Value, configDeathLink.Value);
+        await Client.ConnectAndGetData();
+
+        try
+        {
+            // ArcadeSongView seems pretty useless if ArcadeDifficultyView is enabled, maybe it can be unpatched on archipelago connection?
+            // Harmony.CreateAndPatchAll(typeof(ArcadeSongView));
+
+            Harmony.CreateAndPatchAll(typeof(ArcadeCharacterView));
+            Harmony.CreateAndPatchAll(typeof(ArcadeDifficultyView));
+            Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
+            Harmony.CreateAndPatchAll(typeof(UnlockAll));
+        }
+        catch(Exception e)
+        {
+            Logger.LogFatal($"Patching failed with error: {e.Message}, {e.StackTrace}");
+            return;
+        }
 
         Logger.LogInfo($"Plugin {PluginReleaseInfo.PLUGIN_GUID} is loaded!");
     }

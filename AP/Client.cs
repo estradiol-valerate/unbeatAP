@@ -1,12 +1,11 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
-using Archipelago.MultiClient;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.Enums;
-using Archipelago.MultiClient.Net.Packets;
-using UNBEATAP;
+using Archipelago.MultiClient.Net.Models;
 
-namespace unbeatAP.AP;
+namespace UNBEATAP.AP;
 
 public class Client
 {
@@ -34,7 +33,37 @@ public class Client
     }
 
 
-    public async Task Connect()
+    private void HandleReceiveItem(string name)
+    {
+        if(name.StartsWith(DifficultyController.SongNamePrefix))
+        {
+            DifficultyController.AddProgressiveSong(name);
+            return;
+        }
+        if(CharacterController.CharNames.Contains(name))
+        {
+            CharacterController.AddCharacter(name);
+            return;
+        }
+    }
+
+
+    private void GetExistingItems()
+    {
+        foreach(ItemInfo item in Session.Items.AllItemsReceived)
+        {
+            HandleReceiveItem(item.ItemName);
+        }
+    }
+
+
+    private void GetStoredItems()
+    {
+        
+    }
+
+
+    public async Task ConnectAndGetData()
     {
         Plugin.Logger.LogInfo($"Connecting to {ip}:{port} with game {Plugin.GameName} as {slot}");
         LoginResult result;
@@ -72,7 +101,12 @@ public class Client
 
             Plugin.Logger.LogError(message);
             Connected = false;
+            return;
         }
-        else Connected = true;
+        
+        Connected = true;
+
+        GetStoredItems();
+        GetExistingItems();
     }
 }

@@ -15,16 +15,15 @@ public class ArcadeDifficultyView
             return true;
         }
 
-        string songname2 = songName.ToLower();
-        string diffname2 = selectedDifficulty.ToLower();
-        foreach(string difficulty in DifficultyList.GetDifficulties())
+        string fullName = $"{songName.ToLower()}{DifficultyList.NameSeparator}{selectedDifficulty.ToLower()}";
+        if(DifficultyList.GetDifficulties().Contains(fullName))
         {
-            if(difficulty.ToLower() == $"{songname2}/{diffname2}")
-            {
-                __result = true;
-                return true;
-            }
+            __result = true;
+            return true;
         }
+
+        Plugin.Logger.LogInfo($"Stopped unlocking of {fullName}");
+
         __result = false;
         return false;
     }

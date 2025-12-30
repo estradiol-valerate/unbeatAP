@@ -16,14 +16,12 @@ public class ArcadeCharacterView
             return true;
         }
 
-        foreach(string unlock in CharacterList.GetCharacters())
+        if(CharacterList.GetCharacters().Contains(character.name.ToLower()))
         {
-            if(character.name.ToLower() == unlock)
-            {
-                __result = true;
-                return true;
-            }
+            __result = true;
+            return true;
         }
+
         __result = false;
         return false;
     }
