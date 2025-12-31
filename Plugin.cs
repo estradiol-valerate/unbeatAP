@@ -99,6 +99,7 @@ public class Plugin : BaseUnityPlugin
                 
                 Harmony.CreateAndPatchAll(typeof(FadeTrap));
                 Harmony.CreateAndPatchAll(typeof(ScrollSpeedTrap));
+                Harmony.CreateAndPatchAll(typeof(RainbowTrap));
             }
             catch(Exception e)
             {
