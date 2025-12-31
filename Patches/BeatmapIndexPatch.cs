@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using HarmonyLib;
 using Rhythm;
 using UNBEATAP.Helpers;
@@ -11,17 +9,11 @@ public class BeatmapIndexPatch
 {
     [HarmonyPatch(nameof(BeatmapIndex.VisibleDifficulties), MethodType.Getter)]
     [HarmonyPrefix]
-    static bool GetVisibleDifficultiesPrefix(ref string[] __result, BeatmapIndex __instance)
+    static bool GetVisibleDifficultiesPrefix(ref string[] __result)
     {
         if(!Plugin.Client.Connected)
         {
             return true;
-        }
-
-        string[] baseDiffs = new Traverse(__instance).Field("_selectableDifficulties").GetValue<HashSet<string>>().ToArray();
-        foreach(string diff in baseDiffs)
-        {
-            Plugin.Logger.LogInfo(diff);
         }
 
         __result = DifficultyList.GetVisibleDifficulties().ToArray();
