@@ -6,6 +6,7 @@ using UNBEATAP.Patches;
 using UNBEATAP.AP;
 using BepInEx.Configuration;
 using UNBEATAP.Helpers;
+using Rhythm;
 
 namespace UNBEATAP;
 
@@ -90,6 +91,8 @@ public class Plugin : BaseUnityPlugin
                 Harmony.CreateAndPatchAll(typeof(ArcadeDifficultyView));
                 Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
                 Harmony.CreateAndPatchAll(typeof(UnlockAll));
+
+                Harmony.CreateAndPatchAll(typeof(BeatmapIndexPatch));
 
                 Harmony.CreateAndPatchAll(typeof(ArcadeCharacterTogglePatch));
                 Harmony.CreateAndPatchAll(typeof(RhythmCharacterSelectorPatch));

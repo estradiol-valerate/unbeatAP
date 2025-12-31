@@ -8,12 +8,23 @@ namespace UNBEATAP.Helpers;
 
 public static class DifficultyList
 {
-    public const string NameSeparator = "|";
+    public const string NameSeparator = "/";
+
+    public static readonly Dictionary<string, string> LowerToFullDiffName = new Dictionary<string, string>
+    {
+        {"beginner", "Beginner"},
+        {"easy", "Easy"},
+        {"normal", "Normal"},
+        {"hard", "Hard"},
+        {"unbeatable", "UNBEATABLE"},
+        {"star", "Star"}
+    };
 
     private static Dictionary<string, string[]> diffDict;
     private static Dictionary<string, string> songDict;
 
     private static List<string> currentDifficulties = new List<string>();
+    private static List<string> visibleDifficulties = new List<string>();
 
 
     public static List<string> GetDifficulties()
@@ -22,9 +33,40 @@ public static class DifficultyList
     }
 
 
+    public static List<string> GetVisibleDifficulties()
+    {
+        return visibleDifficulties;
+    }
+
+
+    private static void SortVisibleDifficulties()
+    {
+        // We need to do this because the difficulty switcher assumes they're sorted properly
+        List<string> sortedDifficulties = new List<string>();
+
+        // The dictionary has them listed in order, so we can just check each one in order and get a sorted list
+        foreach(KeyValuePair<string, string> pair in LowerToFullDiffName)
+        {
+            if(visibleDifficulties.Contains(pair.Value))
+            {
+                sortedDifficulties.Add(pair.Value);
+            }
+        }
+
+        visibleDifficulties = sortedDifficulties;
+    }
+
+
     private static void AddDifficulty(string song, string difficulty)
     {
         currentDifficulties.Add($"{song}{NameSeparator}{difficulty}");
+
+        string newDiffName = LowerToFullDiffName[difficulty.ToLower()];
+        if(!visibleDifficulties.Contains(newDiffName))
+        {
+            visibleDifficulties.Add(newDiffName);
+            SortVisibleDifficulties();
+        }
     }
 
 
