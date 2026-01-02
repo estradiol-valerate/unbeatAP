@@ -24,14 +24,15 @@ public static class DifficultyController
         }
 
         // Since count is 1-indexed and diff arrays are zero indexed, unlockedDiffIndex is actually accurate right now
-        if(!DifficultyList.TryAddSongItem(songName, unlockedDiffIndex))
+        SlotData slotData = Plugin.Client.SlotData;
+        if(!DifficultyList.TryAddSongItem(songName, unlockedDiffIndex, slotData.MinDifficulty, slotData.MaxDifficulty))
         {
             // The difficulty unlock was invalid
             return;
         }
 
         SongItemCounts[songName] = unlockedDiffIndex + 1;
-        Plugin.Logger.LogInfo($"Collected Progressive Song #{unlockedDiffIndex + 1}: {songName}");
+        Plugin.Logger.LogInfo($"Successfully collected Progressive Song #{unlockedDiffIndex + 1}: {songName}");
 
         if(!RhythmController.Instance && ArcadeSongDatabase.Instance)
         {

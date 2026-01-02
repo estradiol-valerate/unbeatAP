@@ -1,14 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace UNBEATAP.Helpers;
 
 public static class DifficultyList
 {
     public const string NameSeparator = "/";
+
+    public static readonly string[] DiffNameFromRank =
+    [
+        "beginner",
+        "easy",
+        "normal",
+        "hard",
+        "unbeatable",
+        "star"
+    ];
 
     public static readonly Dictionary<string, string> LowerToFullDiffName = new Dictionary<string, string>
     {
@@ -77,13 +89,23 @@ public static class DifficultyList
             return null;
         }
 
-        return songDict[songName].ToLower();
+        if(!songDict.TryGetValue(songName, out string internalName))
+        {
+            Plugin.Logger.LogError($"Unable to get internal name for song: {songName}");
+            return null;
+        }
+
+        return internalName.ToLower();
     }
 
 
-    public static bool TryAddSongItem(string songName, int diffIndex)
+    public static bool TryAddSongItem(string songName, int diffIndex, int minDiff, int maxDiff)
     {
         string internalName = GetInternalName(songName);
+        if(string.IsNullOrEmpty(internalName))
+        {
+            return false;
+        }
         
         if(!diffDict.TryGetValue(internalName, out string[] difficulties))
         {
@@ -91,16 +113,32 @@ public static class DifficultyList
             return false;
         }
 
-        if(difficulties.Length <= diffIndex)
+        int diffRank = diffIndex + minDiff;
+        while(diffRank <= maxDiff && diffRank <= DiffNameFromRank.Length)
         {
-            int extraDiffs = diffIndex - difficulties.Length + 1;
-            Plugin.Logger.LogWarning($"Received {extraDiffs} extra difficult(y)(ies) for song: {internalName}");
-            return false;
+            string targetDiff = DiffNameFromRank[diffRank];
+            if(!difficulties.Contains(targetDiff))
+            {
+                // We skip to collected the lowest difficulty rank the song has in our range
+                diffRank++;
+                continue;
+            }
+
+            string newDifficulty = difficulties[diffRank];
+            if(currentDifficulties.Contains($"{internalName}{NameSeparator}{newDifficulty}"))
+            {
+                // We've already unlocked this difficulty - this means our target diff index is higher
+                diffRank++;
+                continue;
+            }
+
+            Plugin.Logger.LogInfo($"Added {internalName} : {newDifficulty}");
+            AddDifficulty(internalName, newDifficulty);
+            return true;
         }
 
-        string newDifficulty = difficulties[diffIndex];
-        AddDifficulty(internalName, newDifficulty);
-        return true;
+        Plugin.Logger.LogWarning($"Received extra difficulty for song: {internalName}");
+        return false;
     }
 
 
