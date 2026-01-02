@@ -173,5 +173,6 @@ public class Client
 
         SetPrimaryCharacter(string.IsNullOrEmpty(primarySelected) ? "Beat" : primarySelected);
         SetSecondaryCharacter(string.IsNullOrEmpty(secondarySelected) ? "Quaver" : secondarySelected);
+        CharacterController.ForceEquipUnlockedCharacter();
     }
 }

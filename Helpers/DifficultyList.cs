@@ -132,7 +132,6 @@ public static class DifficultyList
                 continue;
             }
 
-            Plugin.Logger.LogInfo($"Added {internalName} : {newDifficulty}");
             AddDifficulty(internalName, newDifficulty);
             return true;
         }
