@@ -26,7 +26,7 @@ public class ProfileInfoPatch
 
     [HarmonyPatch("SaveChabo")]
     [HarmonyPrefix]
-    static bool SaveChaboPrefix(string chabo, SuperChaboDescriptor.ChaboSaveStructure save)
+    static bool SaveChaboPrefix(string chabo, ref SuperChaboDescriptor.ChaboSaveStructure save)
     {
         if(!Plugin.Client.Connected)
         {
@@ -35,6 +35,20 @@ public class ProfileInfoPatch
 
         // Disable saving all challenge boards
         // This could also be replaced with a call to AP datastorage
+        return false;
+    }
+
+
+    [HarmonyPatch("SaveHighscores")]
+    [HarmonyPrefix]
+    static bool SaveHighscoresPrefix()
+    {
+        if(!Plugin.Client.Connected)
+        {
+            return true;
+        }
+
+        // Disable saving all high scores
         return false;
     }
 }

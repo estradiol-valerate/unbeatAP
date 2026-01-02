@@ -86,14 +86,17 @@ public class Plugin : BaseUnityPlugin
             Logger.LogInfo("Applying patches.");
             try
             {
-                // Disable general progression
+                // Override general progression
                 Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
                 Harmony.CreateAndPatchAll(typeof(MainProgressionContainerPatch));
                 Harmony.CreateAndPatchAll(typeof(UnlockAll));
 
-                // Disable challenges
+                // Override challenges
                 Harmony.CreateAndPatchAll(typeof(ProfileInfoPatch));
                 Harmony.CreateAndPatchAll(typeof(BaseChallengeDescriptorPatch));
+
+                // Override high scores
+                Harmony.CreateAndPatchAll(typeof(FileStoragePatch));
 
                 // Rando song handling
                 Harmony.CreateAndPatchAll(typeof(ArcadeDifficultyView));
