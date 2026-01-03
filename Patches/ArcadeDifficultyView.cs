@@ -4,9 +4,10 @@ using UNBEATAP.Helpers;
 
 namespace UNBEATAP.Patches;
 
+[HarmonyPatch(typeof(DifficultyUnlocksManager))]
 public class ArcadeDifficultyView
 {
-    [HarmonyPatch(typeof(DifficultyUnlocksManager), "GetSongState")]
+    [HarmonyPatch("GetSongState")]
     [HarmonyPrefix]
     static bool GetDifficultyUnlockPatch(ref bool __result, string songName, string selectedDifficulty)
     {

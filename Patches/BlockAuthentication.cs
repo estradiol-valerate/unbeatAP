@@ -3,10 +3,11 @@ using HarmonyLib;
 
 namespace UNBEATAP.Patches;
 
+[HarmonyPatch(typeof(AuthenticationBase))]
 public class BlockAuthentication
 {
     // This blocks authentication to the servers. Prevents leaderboard submission
-    [HarmonyPatch(typeof(AuthenticationBase), "CheckConnection")]
+    [HarmonyPatch("CheckConnection")]
     [HarmonyPrefix]
     static bool BlockAuthenticationPatch(ref Task<bool> __result)
     {

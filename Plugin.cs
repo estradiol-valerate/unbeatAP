@@ -118,6 +118,7 @@ public class Plugin : BaseUnityPlugin
                 Harmony.CreateAndPatchAll(typeof(BlockAuthentication));
                 Harmony.CreateAndPatchAll(typeof(MainProgressionContainerPatch));
                 Harmony.CreateAndPatchAll(typeof(UnlockAll));
+                Harmony.CreateAndPatchAll(typeof(ArcadeMenuPaletteView));
 
                 // Override challenges
                 Harmony.CreateAndPatchAll(typeof(ProfileInfoPatch));
