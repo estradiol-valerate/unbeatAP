@@ -5,7 +5,7 @@ namespace UNBEATAP.Ratings;
 public static class CustomRatingCalculator
 {
     public const float DifficultyPower = 2f;
-    public const float ScoreFalloffBase = 0.965f;
+    public const float ScoreFalloffBase = 0.9f;
 
 
     public static float GetCustomRatingFromPlay(float level, float acc, bool fc, bool fail)
