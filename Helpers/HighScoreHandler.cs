@@ -122,6 +122,7 @@ public static class HighScoreHandler
             level,
             slotData.AccCurveCutoff,
             slotData.AccCurveBias,
+            slotData.AccCurveLowBias,
             slotData.AllowPfc
         );
 
