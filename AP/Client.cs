@@ -72,9 +72,15 @@ public class Client
             x =>
                 item.ItemId == x.ItemId
                 && item.LocationId == x.LocationId
+                && item.LocationName != "Cheat Console"
                 && item.Flags == x.Flags
-                && player?.Slot == x.Player?.Slot
-                && player?.Team == x.Player?.Team
+                && player != null
+                && player.Slot == x.Player?.Slot
+                && player.Team == x.Player?.Team
+                && !string.IsNullOrEmpty(player.Name)
+                && player.Name == x.Player?.Name
+                && !string.IsNullOrEmpty(player.Game)
+                && player.Game == x.Player?.Game
         );
     }
 
