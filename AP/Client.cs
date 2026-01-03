@@ -9,6 +9,7 @@ using UnityEngine;
 using System.Linq;
 using Challenges;
 using UNBEATAP.Helpers;
+using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 
 namespace UNBEATAP.AP;
 
@@ -18,6 +19,7 @@ public class Client
 
     public ArchipelagoSession Session { get; private set; }
     public SlotData SlotData { get; private set; }
+    public DeathLinkService DeathLinkService { get; private set; }
 
     public List<ItemInfo> ReceivedItems = new List<ItemInfo>();
     public int LastCheckedLocation = 0;
@@ -29,11 +31,11 @@ public class Client
 
     public event Action<ItemInfo> OnItemReceived;
 
-    private readonly string ip;
-    private readonly int port;
-    private readonly string slot;
-    private readonly string password;
-    private readonly bool deathLink;
+    public readonly string ip;
+    public readonly int port;
+    public readonly string slot;
+    public readonly string password;
+    public readonly bool deathLink;
 
 
     public Client()
@@ -169,6 +171,12 @@ public class Client
     }
 
 
+    private void HandleDeathLink(DeathLink deathLink)
+    {
+        DeathLinkController.TryPerformDeathLink(deathLink);
+    }
+
+
     public async Task ConnectAndGetData()
     {
         Plugin.Logger.LogInfo($"Connecting to {ip}:{port} with game {Plugin.GameName} as {slot}");
@@ -254,6 +262,13 @@ public class Client
             // Force reload arcade progress so patches can take effect
             Plugin.Logger.LogInfo($"Force reloading progress.");
             ArcadeProgressController.Instance.Init();
+        }
+
+        if(deathLink)
+        {
+            DeathLinkService = Session.CreateDeathLinkService();
+            DeathLinkService.EnableDeathLink();
+            DeathLinkService.OnDeathLinkReceived += HandleDeathLink;
         }
     }
 }

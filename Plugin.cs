@@ -141,6 +141,10 @@ public class Plugin : BaseUnityPlugin
                 Harmony.CreateAndPatchAll(typeof(SongRatingDisplayPatch));
                 Harmony.CreateAndPatchAll(typeof(ArcadeSongScorePatch));
                 Harmony.CreateAndPatchAll(typeof(SongButtonPatch));
+
+                // Death link
+                Harmony.CreateAndPatchAll(typeof(RhythmControllerPatch));
+                Harmony.CreateAndPatchAll(typeof(PauseMenuPatch));
             }
             catch(Exception e)
             {
