@@ -19,6 +19,7 @@ public class Client
     public SlotData SlotData { get; private set; }
 
     public List<ItemInfo> ReceivedItems = new List<ItemInfo>();
+    public int LastCheckedLocation = 0;
 
     public string primaryCharacter { get; private set; }
     public string secondaryCharacter { get; private set; }
@@ -88,6 +89,33 @@ public class Client
     {
         secondaryCharacter = secondary;
         Session.DataStorage[Scope.Slot, "secondaryCharacter"] = secondary;
+    }
+
+
+    public void HandleRatingUpdate(float newRating)
+    {
+        const string ratingLocPrefix = "Rating Unlock ";
+
+        // The in-game rating is always scaled to be 0 to 100
+        if(newRating >= 100f)
+        {
+            Session.SetGoalAchieved();
+        }
+
+        float ratingStep = 100f / SlotData.ItemCount;
+        int checkedRatingCount = Mathf.FloorToInt(newRating / ratingStep);
+
+        List<long> checkedLocations = new List<long>();
+        while(LastCheckedLocation < checkedRatingCount)
+        {
+            LastCheckedLocation += 1;
+            string locationName = $"{ratingLocPrefix}{LastCheckedLocation}";
+            checkedLocations.Add(Session.Locations.GetLocationIdFromName(Plugin.GameName, locationName));
+
+            Plugin.Logger.LogInfo($"Completing check for {locationName}");
+        }
+
+        Session.Locations.CompleteLocationChecks(checkedLocations.ToArray());
     }
 
 

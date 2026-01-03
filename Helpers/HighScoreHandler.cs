@@ -104,6 +104,8 @@ public static class HighScoreHandler
         // Updates the list of songs on the player profile
         PlayerStats.Update("songRatings", adjustedRatings);
         FileStorage.SaveStats();
+
+        Plugin.Client.HandleRatingUpdate(playerRating.Value);
         return playerRating.Value;
     }
 }
