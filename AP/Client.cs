@@ -8,6 +8,7 @@ using Archipelago.MultiClient.Net.Helpers;
 using UnityEngine;
 using System.Linq;
 using Challenges;
+using UNBEATAP.Helpers;
 
 namespace UNBEATAP.AP;
 
@@ -111,11 +112,13 @@ public class Client
             LastCheckedLocation += 1;
             string locationName = $"{ratingLocPrefix}{LastCheckedLocation}";
             checkedLocations.Add(Session.Locations.GetLocationIdFromName(Plugin.GameName, locationName));
-
-            Plugin.Logger.LogInfo($"Completing check for {locationName}");
         }
 
-        Session.Locations.CompleteLocationChecks(checkedLocations.ToArray());
+        if(checkedLocations.Count > 0)
+        {
+            Plugin.Logger.LogInfo($"Completing check for {ratingLocPrefix}{LastCheckedLocation}");
+            Session.Locations.CompleteLocationChecks(checkedLocations.ToArray());
+        }
     }
 
 
@@ -225,6 +228,9 @@ public class Client
                 Plugin.Logger.LogInfo($"Breakout Edition DLC is enabled for this randomizer.");
             }
         }
+
+        Plugin.Logger.LogInfo("Loading previously saved high scores.");
+        await HighScoreSaver.LoadHighscores();
 
         string primarySelected = await Session.DataStorage[Scope.Slot, "primaryCharacter"].GetAsync<string>();
         string secondarySelected = await Session.DataStorage[Scope.Slot, "secondaryCharacter"].GetAsync<string>();

@@ -1,6 +1,7 @@
 using Arcade.Utils;
 using Challenges;
 using HarmonyLib;
+using UNBEATAP.Helpers;
 
 namespace UNBEATAP.Patches;
 
@@ -49,9 +50,10 @@ public class ProfileInfoPatch
             return true;
         }
 
-        // Still reset stuff for calculations, but don't actually save high scores
+        // Still reset stuff for calculations, but use our own method for saving highscores
         PlayerStatsHelper.Instance?.ResetSavedValues();
         HighScoreList.HighScoresUpdated?.Invoke();
+        HighScoreSaver.SaveHighscores();
         return false;
     }
 }
