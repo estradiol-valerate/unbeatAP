@@ -1,3 +1,4 @@
+using Arcade.Utils;
 using Challenges;
 using HarmonyLib;
 
@@ -48,7 +49,9 @@ public class ProfileInfoPatch
             return true;
         }
 
-        // Disable saving all high scores
+        // Still reset stuff for calculations, but don't actually save high scores
+        PlayerStatsHelper.Instance?.ResetSavedValues();
+        HighScoreList.HighScoresUpdated?.Invoke();
         return false;
     }
 }
