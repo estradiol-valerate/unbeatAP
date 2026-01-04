@@ -9,7 +9,8 @@ public static class DeathLinkController
     public static readonly Dictionary<DeathLinkReason, string> DeathLinkMessage = new Dictionary<DeathLinkReason, string>
     {
         {DeathLinkReason.Fail, "{player} couldn't keep up."},
-        {DeathLinkReason.Quit, "{player} lacked confidence."}
+        {DeathLinkReason.Quit, "{player} lacked confidence."},
+        {DeathLinkReason.Restart, "{player} wanted to run it back."}
     };
 
 
@@ -39,5 +40,6 @@ public static class DeathLinkController
 public enum DeathLinkReason
 {
     Fail,
-    Quit
+    Quit,
+    Restart
 }
