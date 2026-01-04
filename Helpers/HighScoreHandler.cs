@@ -67,10 +67,8 @@ public static class HighScoreHandler
                 score.level = beatmap.metadata.tagData.Level;
             }
 
-            int missCount = 0;
-            score._notes.TryGetValue("Miss", out missCount);
             float acc = score.accuracy * 100f;
-            float rating = CustomRatingCalculator.GetCustomRatingFromPlay(score.level, acc, missCount <= 0, !score.cleared);
+            float rating = CustomRatingCalculator.GetCustomRatingFromPlay(score.level, acc, score.IsNoMiss(), !score.cleared);
 
             if(songRatings.ContainsKey(score.song) && songRatings[score.song] < rating)
             {
