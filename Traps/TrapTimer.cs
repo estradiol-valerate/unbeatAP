@@ -23,7 +23,11 @@ public class TrapTimer
 
     public void Activate()
     {
-        Timer = Duration;
+        if(Timer <= 0f)
+        {
+            Timer = Duration;
+        }
+        else Timer += Duration;
     }
 
 
