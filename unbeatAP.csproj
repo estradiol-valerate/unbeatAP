@@ -37,6 +37,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Rewired">
+      <HintPath>lib\Rewired_Core.dll</HintPath>
+    </Reference>
     <Reference Include="TMPro">
       <HintPath>lib\Unity.TextMeshPro.dll</HintPath>
     </Reference>

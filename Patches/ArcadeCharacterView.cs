@@ -5,9 +5,10 @@ using UNBEATAP.Helpers;
 
 namespace UNBEATAP.Patches;
 
+[HarmonyPatch(typeof(CharacterUnlocksManager))]
 public class ArcadeCharacterView
 {
-    [HarmonyPatch(typeof(CharacterUnlocksManager), "GetCharacterState")]
+    [HarmonyPatch("GetCharacterState")]
     [HarmonyPrefix]
     static bool GetCharacterStatePatch(ref bool __result, CharacterIndex.Character character)
     {

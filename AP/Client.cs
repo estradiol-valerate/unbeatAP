@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Models;
 using Archipelago.MultiClient.Net.Helpers;
 using UnityEngine;
+using Challenges;
+using UNBEATAP.Helpers;
+using Archipelago.MultiClient.Net.BounceFeatures.DeathLink;
 
 namespace UNBEATAP.AP;
 
@@ -13,10 +17,12 @@ public class Client
 {
     public bool Connected { get; private set; }
 
-    public ArchipelagoSession Session;
-    public SlotData SlotData;
+    public ArchipelagoSession Session { get; private set; }
+    public SlotData SlotData { get; private set; }
+    public DeathLinkService DeathLinkService { get; private set; }
 
     public List<ItemInfo> ReceivedItems = new List<ItemInfo>();
+    public int LastCheckedLocation = 0;
 
     public string primaryCharacter { get; private set; }
     public string secondaryCharacter { get; private set; }
@@ -25,11 +31,24 @@ public class Client
 
     public event Action<ItemInfo> OnItemReceived;
 
-    private string ip;
-    private int port;
-    private string slot;
-    private string password;
-    private bool deathLink;
+    public readonly string ip;
+    public readonly int port;
+    public readonly string slot;
+    public readonly string password;
+    public readonly bool deathLink;
+
+
+    public Client()
+    {
+        ip = "";
+        port = 58008;
+        slot = "";
+        password = "";
+        deathLink = false;
+
+        Connected = false;
+        MissingDlc = false;
+    }
 
 
     public Client(string ip, int port, string slot, string password, bool deathLink)
@@ -40,10 +59,31 @@ public class Client
         this.password = password;
         this.deathLink = deathLink;
 
+        Connected = false;
         MissingDlc = false;
 
         Plugin.Logger.LogInfo($"Creating session with server {ip}:{port}");
         Session = ArchipelagoSessionFactory.CreateSession(ip, port);
+    }
+
+
+    public bool HasReceivedItem(ItemInfo item)
+    {
+        PlayerInfo player = item.Player;
+        return ReceivedItems.Any(
+            x =>
+                item.ItemId == x.ItemId
+                && item.LocationId == x.LocationId
+                && item.LocationName != "Cheat Console"
+                && item.Flags == x.Flags
+                && player != null
+                && player.Slot == x.Player?.Slot
+                && player.Team == x.Player?.Team
+                && !string.IsNullOrEmpty(player.Name)
+                && player.Name == x.Player?.Name
+                && !string.IsNullOrEmpty(player.Game)
+                && player.Game == x.Player?.Game
+        );
     }
 
 
@@ -61,15 +101,46 @@ public class Client
     }
 
 
+    public void HandleRatingUpdate(float newRating)
+    {
+        const string ratingLocPrefix = "Rating Unlock ";
+
+        // The in-game rating is always scaled to be 0 to 100
+        if(newRating >= 100f)
+        {
+            Plugin.Logger.LogInfo("Target rating achieved! Setting goal.");
+            Session.SetGoalAchieved();
+        }
+
+        float ratingStep = 100f / SlotData.ItemCount;
+        int checkedRatingCount = Mathf.FloorToInt(newRating / ratingStep);
+
+        List<long> checkedLocations = new List<long>();
+        while(LastCheckedLocation < checkedRatingCount)
+        {
+            LastCheckedLocation += 1;
+            string locationName = $"{ratingLocPrefix}{LastCheckedLocation}";
+            checkedLocations.Add(Session.Locations.GetLocationIdFromName(Plugin.GameName, locationName));
+        }
+
+        if(checkedLocations.Count > 0)
+        {
+            Plugin.Logger.LogInfo($"Completing check for {ratingLocPrefix}{LastCheckedLocation}");
+            Session.Locations.CompleteLocationChecks(checkedLocations.ToArray());
+        }
+    }
+
+
     private void HandleItemReceive(IReceivedItemsHelper helper)
     {
         ItemInfo item = helper.PeekItem();
-        if(ReceivedItems.Contains(item))
+        if(HasReceivedItem(item))
         {
             Plugin.Logger.LogWarning($"Received duplicate of {item.ItemName} from {item.LocationName}!");
             helper.DequeueItem();
             return;
         }
+        ReceivedItems.Add(item);
 
         string name = item.ItemName;
         if(name.StartsWith(DifficultyController.SongNamePrefix))
@@ -85,7 +156,6 @@ public class Client
             Plugin.Logger.LogWarning($"Unable to handle item: {name}");
         }
 
-        ReceivedItems.Add(item);
         OnItemReceived?.Invoke(item);
 
         helper.DequeueItem();
@@ -98,6 +168,12 @@ public class Client
         {
             HandleItemReceive(Session.Items);
         }
+    }
+
+
+    private void HandleDeathLink(DeathLink deathLink)
+    {
+        DeathLinkController.TryPerformDeathLink(deathLink);
     }
 
 
@@ -141,6 +217,9 @@ public class Client
             Connected = false;
             return;
         }
+
+        // Backup save files in case our wacky stuff leads to breaking a save
+        Plugin.DoBackup();
         
         Connected = true;
 
@@ -165,6 +244,10 @@ public class Client
             }
         }
 
+        Plugin.Logger.LogInfo("Loading previously saved high scores.");
+        await HighScoreSaver.LoadHighScores();
+        Session.DataStorage[Scope.Slot, HighScoreSaver.LatestScoreKey].OnValueChanged += HighScoreSaver.OnLatestScoreUpdated;
+
         string primarySelected = await Session.DataStorage[Scope.Slot, "primaryCharacter"].GetAsync<string>();
         string secondarySelected = await Session.DataStorage[Scope.Slot, "secondaryCharacter"].GetAsync<string>();
 
@@ -173,5 +256,20 @@ public class Client
 
         SetPrimaryCharacter(string.IsNullOrEmpty(primarySelected) ? "Beat" : primarySelected);
         SetSecondaryCharacter(string.IsNullOrEmpty(secondarySelected) ? "Quaver" : secondarySelected);
+        CharacterController.ForceEquipUnlockedCharacter();
+
+        if(ArcadeProgressController.Instance)
+        {
+            // Force reload arcade progress so patches can take effect
+            Plugin.Logger.LogInfo($"Force reloading progress.");
+            ArcadeProgressController.Instance.Init();
+        }
+
+        if(deathLink)
+        {
+            DeathLinkService = Session.CreateDeathLinkService();
+            DeathLinkService.EnableDeathLink();
+            DeathLinkService.OnDeathLinkReceived += HandleDeathLink;
+        }
     }
 }

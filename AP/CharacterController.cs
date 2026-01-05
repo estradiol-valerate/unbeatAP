@@ -29,7 +29,12 @@ public static class CharacterController
         }
         if(!characters.Contains(secondary))
         {
-            client.SetSecondaryCharacter(characters[0]);
+            if(characters.Count >= 2)
+            {
+                // Choosing a different character as the secondary if possible is kinda cool
+                client.SetSecondaryCharacter(characters[1]);
+            }
+            else client.SetSecondaryCharacter(characters[0]);
         }
     }
 
@@ -44,7 +49,7 @@ public static class CharacterController
             return;
         }
 
-        Plugin.Logger.LogInfo($"Collected Character: {charName}");
+        Plugin.Logger.LogInfo($"Successfully collected Character: {charName}");
         ForceEquipUnlockedCharacter();
     }
 }

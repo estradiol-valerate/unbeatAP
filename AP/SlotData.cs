@@ -1,22 +1,30 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace UNBEATAP.AP;
 
 public class SlotData
 {
-    public float SkillRating;
     public bool UseBreakout;
     public int MaxDifficulty;
     public int MinDifficulty;
+
+    public float SkillRating;
+    public bool AllowPfc;
+    public float AccCurveBias;
+    public float AccCurveLowBias;
+    public float AccCurveCutoff;
+
     public int ItemCount;
     public float TargetRating;
 
 
-    private void TryGetValue(Dictionary<string, object> data, string key, ref int output)
+    private void TryGetValue(Dictionary<string, object> data, string key, int def, out int output)
     {
         if(!data.TryGetValue(key, out object dataObject))
         {
             Plugin.Logger.LogError($"Failed to find key {key} in slot data!");
+            output = def;
             return;
         }
 
@@ -29,11 +37,12 @@ public class SlotData
     }
 
 
-    private void TryGetValue(Dictionary<string, object> data, string key, ref float output)
+    private void TryGetValue(Dictionary<string, object> data, string key, float def, out float output)
     {
         if(!data.TryGetValue(key, out object dataObject))
         {
             Plugin.Logger.LogError($"Failed to find key {key} in slot data!");
+            output = def;
             return;
         }
 
@@ -46,11 +55,12 @@ public class SlotData
     }
 
 
-    private void TryGetValue(Dictionary<string, object> data, string key, ref bool output)
+    private void TryGetValue(Dictionary<string, object> data, string key, bool def, out bool output)
     {
         if(!data.TryGetValue(key, out object dataObject))
         {
             Plugin.Logger.LogError($"Failed to find key {key} in slot data!");
+            output = def;
             return;
         }
 
@@ -58,6 +68,7 @@ public class SlotData
         if(!int.TryParse(repr, out int intValue))
         {
             Plugin.Logger.LogError($"Entry {key} : {repr} in slot data is unexpected type! Expected int.");
+            output = def;
             return;
         }
 
@@ -67,11 +78,22 @@ public class SlotData
 
     public SlotData(Dictionary<string, object> data)
     {
-        TryGetValue(data, "skill_rating", ref SkillRating);
-        TryGetValue(data, "use_breakout", ref UseBreakout);
-        TryGetValue(data, "max_difficulty", ref MaxDifficulty);
-        TryGetValue(data, "min_difficulty", ref MinDifficulty);
-        TryGetValue(data, "item_count", ref ItemCount);
-        TryGetValue(data, "target_rating", ref TargetRating);
+        TryGetValue(data, "use_breakout", false, out UseBreakout);
+        TryGetValue(data, "max_difficulty", 5, out MaxDifficulty);
+        TryGetValue(data, "min_difficulty", 0, out MinDifficulty);
+
+        TryGetValue(data, "skill_rating", 500, out SkillRating);
+        TryGetValue(data, "allow_pfc", true, out AllowPfc);
+        TryGetValue(data, "acc_curve_bias", 600, out AccCurveBias);
+        TryGetValue(data, "acc_curve_low_bias", 200, out AccCurveLowBias);
+        TryGetValue(data, "acc_curve_cutoff", 85, out AccCurveCutoff);
+
+        TryGetValue(data, "item_count", 1, out ItemCount);
+        TryGetValue(data, "target_rating", Mathf.Infinity, out TargetRating);
+
+        SkillRating /= 100f;
+        AccCurveBias /= 100f;
+        AccCurveLowBias /= 100f;
+        AccCurveCutoff /= 100f;
     }
 }
