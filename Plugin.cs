@@ -35,6 +35,11 @@ public class Plugin : BaseUnityPlugin
         }
     }
 
+    public static ConfigEntry<float> MutedDuration;
+    public static ConfigEntry<float> RainbowDuration;
+    public static ConfigEntry<float> ScrollSpeedDuration;
+    public static ConfigEntry<float> StealthDuration;
+
     private static ConfigEntry<string> configIp;
     private static ConfigEntry<int> configPort;
     private static ConfigEntry<string> configSlot;
@@ -84,6 +89,31 @@ public class Plugin : BaseUnityPlugin
             "DeathLink",
             false,
             "If Death Link is enabled, you'll fail out of a song if someone else dies, and everyone else will die when you fail a song."
+        );
+
+        MutedDuration = Config.Bind(
+            "Traps",
+            "Mute Trap Duration",
+            15f,
+            "The amount of time a Mute Trap mutes the music. Set to 0 to disable Mute Traps client-side."
+        );
+        RainbowDuration = Config.Bind(
+            "Traps",
+            "Rainbow Trap Duration",
+            15f,
+            "The amount of time a Rainbow Trap randomizes note colors. Set to 0 to disable Rainbow Traps client-side."
+        );
+        ScrollSpeedDuration = Config.Bind(
+            "Traps",
+            "Scroll Speed Trap Duration",
+            10f,
+            "The amount of time a Scroll Speed Trap changes the note scroll speed. Set to 0 to disable Scroll Speed Traps client-side."
+        );
+        StealthDuration = Config.Bind(
+            "Traps",
+            "Stealth Trap Duration",
+            20f,
+            "The amount of time a Stealth Trap fades out all notes. Set to 0 to disable Stealth Traps client-side."
         );
 
         backupCount = Config.Bind(
