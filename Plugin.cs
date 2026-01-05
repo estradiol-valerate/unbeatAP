@@ -146,6 +146,12 @@ public class Plugin : BaseUnityPlugin
                 // Death link
                 Harmony.CreateAndPatchAll(typeof(RhythmControllerPatch));
                 Harmony.CreateAndPatchAll(typeof(PauseMenuPatch));
+                
+                // Traps
+                Harmony.CreateAndPatchAll(typeof(FadeTrap));
+                Harmony.CreateAndPatchAll(typeof(ScrollSpeedTrap));
+                Harmony.CreateAndPatchAll(typeof(RainbowTrap));
+                Harmony.CreateAndPatchAll(typeof(CriticalTrap));
             }
             catch(Exception e)
             {
