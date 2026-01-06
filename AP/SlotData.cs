@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace UNBEATAP.AP;
@@ -17,6 +19,9 @@ public class SlotData
 
     public int ItemCount;
     public float TargetRating;
+
+    public string WorldVersion;
+    public string[] CompatibleVersions;
 
 
     private void TryGetValue(Dictionary<string, object> data, string key, int def, out int output)
@@ -90,6 +95,23 @@ public class SlotData
 
         TryGetValue(data, "item_count", 1, out ItemCount);
         TryGetValue(data, "target_rating", Mathf.Infinity, out TargetRating);
+
+        if(data.TryGetValue("version", out object versionData))
+        {
+            WorldVersion = versionData.ToString();
+        }
+        if(data.TryGetValue("compatible_versions", out object compatibleVersionsData))
+        {
+            try
+            {
+                string compatibleVersionsJson = compatibleVersionsData.ToString();
+                CompatibleVersions = JsonConvert.DeserializeObject<string[]>(compatibleVersionsJson);
+            }
+            catch(Exception e)
+            {
+                Plugin.Logger.LogError($"Failed to parse compatible versions with error: {e.Message}\n    {e.StackTrace}");
+            }
+        }
 
         SkillRating /= 100f;
         AccCurveBias /= 100f;

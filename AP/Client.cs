@@ -231,63 +231,81 @@ public class Client
             return;
         }
 
-        // Backup save files in case our wacky stuff leads to breaking a save
-        Plugin.DoBackup();
-        
-        Connected = true;
-
-        SlotData = new SlotData(Session.DataStorage.GetSlotData());
-
-        if(SlotData.UseBreakout)
+        try
         {
-            try
+            SlotData = new SlotData(Session.DataStorage.GetSlotData());
+
+            if(!APVersion.CheckConnectionCompatible(SlotData.WorldVersion, SlotData.CompatibleVersions))
             {
-                DlcList dlcs = Resources.Load<DlcList>("DlcList");
-                if(!dlcs.availableDlcs.Contains("DeluxeEdition"))
+                Plugin.Logger.LogError($"Plugin version {PluginReleaseInfo.PLUGIN_VERSION} is not compatible with apworld version {SlotData.WorldVersion}!\n    Please update your plugin and/or apworld!");
+                await Session?.Socket.DisconnectAsync();
+
+                SlotData = null;
+                Connected = false;
+                return;
+            }
+
+            // Backup save files in case our wacky stuff leads to breaking a save
+            Plugin.DoBackup();
+
+            Connected = true;
+
+            if(SlotData.UseBreakout)
+            {
+                try
                 {
-                    Plugin.Logger.LogError("The Breakout Edition DLC was enabled in the world configuration, but is not installed!\n    The randomizer may not be possible without the DLC!");
-                    MissingDlc = true;
+                    DlcList dlcs = Resources.Load<DlcList>("DlcList");
+                    if(!dlcs.availableDlcs.Contains("DeluxeEdition"))
+                    {
+                        Plugin.Logger.LogError("The Breakout Edition DLC was enabled in the world configuration, but is not installed!\n    The randomizer may not be possible without the DLC!");
+                        MissingDlc = true;
+                    }
+                }
+                catch {}
+
+                if(!MissingDlc)
+                {
+                    Plugin.Logger.LogInfo($"Breakout Edition DLC is enabled for this randomizer.");
                 }
             }
-            catch {}
 
-            if(!MissingDlc)
+            Plugin.Logger.LogInfo("Loading previously saved high scores.");
+            await HighScoreSaver.LoadHighScores();
+            Session.DataStorage[Scope.Slot, HighScoreSaver.LatestScoreKey].OnValueChanged += HighScoreSaver.OnLatestScoreUpdated;
+
+            string primarySelected = await Session.DataStorage[Scope.Slot, "primaryCharacter"].GetAsync<string>();
+            string secondarySelected = await Session.DataStorage[Scope.Slot, "secondaryCharacter"].GetAsync<string>();
+
+            Session.Items.ItemReceived += HandleItemReceive;
+            GetQueuedItems();
+
+            SetPrimaryCharacter(string.IsNullOrEmpty(primarySelected) ? "Beat" : primarySelected);
+            SetSecondaryCharacter(string.IsNullOrEmpty(secondarySelected) ? "Quaver" : secondarySelected);
+            CharacterController.ForceEquipUnlockedCharacter();
+
+            if(ArcadeProgressController.Instance)
             {
-                Plugin.Logger.LogInfo($"Breakout Edition DLC is enabled for this randomizer.");
+                // Force reload arcade progress so patches can take effect
+                Plugin.Logger.LogInfo($"Force reloading progress.");
+                ArcadeProgressController.Instance.Init();
+            }
+
+            if(deathLink)
+            {
+                DeathLinkService = Session.CreateDeathLinkService();
+                DeathLinkService.EnableDeathLink();
+                DeathLinkService.OnDeathLinkReceived += HandleDeathLink;
             }
         }
-
-        Plugin.Logger.LogInfo("Loading previously saved high scores.");
-        await HighScoreSaver.LoadHighScores();
-        Session.DataStorage[Scope.Slot, HighScoreSaver.LatestScoreKey].OnValueChanged += HighScoreSaver.OnLatestScoreUpdated;
-
-        string primarySelected = await Session.DataStorage[Scope.Slot, "primaryCharacter"].GetAsync<string>();
-        string secondarySelected = await Session.DataStorage[Scope.Slot, "secondaryCharacter"].GetAsync<string>();
-
-        Session.Items.ItemReceived += HandleItemReceive;
-        GetQueuedItems();
-
-        SetPrimaryCharacter(string.IsNullOrEmpty(primarySelected) ? "Beat" : primarySelected);
-        SetSecondaryCharacter(string.IsNullOrEmpty(secondarySelected) ? "Quaver" : secondarySelected);
-        CharacterController.ForceEquipUnlockedCharacter();
-
-        if(ArcadeProgressController.Instance)
+        catch(Exception e)
         {
-            // Force reload arcade progress so patches can take effect
-            Plugin.Logger.LogInfo($"Force reloading progress.");
-            ArcadeProgressController.Instance.Init();
-        }
-
-        if(deathLink)
-        {
-            DeathLinkService = Session.CreateDeathLinkService();
-            DeathLinkService.EnableDeathLink();
-            DeathLinkService.OnDeathLinkReceived += HandleDeathLink;
+            Plugin.Logger.LogError($"Client failed to connect with error: {e.Message}\n    {e.StackTrace}");
+            DisconnectAndClose(false);
         }
     }
 
 
-    public void DisconnectAndClose()
+    public void DisconnectAndClose(bool reload = true)
     {
         Plugin.Logger.LogInfo($"Disconnecting from {ip}:{port}");
 
@@ -319,7 +337,10 @@ public class Client
             ArcadeProgressController.Instance.Init();
         }
 
-        // Reload the arcade menu when disconnecting
-        LevelManager.LoadLevel(JeffBezosController.arcadeMenuScene);
+        if(reload)
+        {
+            // Reload the arcade menu when disconnecting
+            LevelManager.LoadLevel(JeffBezosController.arcadeMenuScene);
+        }
     }
 }
