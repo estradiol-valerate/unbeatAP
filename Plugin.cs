@@ -9,6 +9,7 @@ using UNBEATAP.Helpers;
 using UNBEATAP.Traps;
 using UnityEngine;
 using UNBEATAP.Objects;
+using UnityEngine.SceneManagement;
 
 namespace UNBEATAP;
 
@@ -145,6 +146,23 @@ public class Plugin : BaseUnityPlugin
     }
 
 
+    private static void UpdateScene(Scene current, Scene next)
+    {
+        if(string.IsNullOrEmpty(next.name))
+        {
+            return;
+        }
+
+        if(!ArchipelagoManager.Instance)
+        {
+            Logger.LogInfo($"Creating manager.");
+            new GameObject("Archipelago Manager", typeof(ArchipelagoManager));
+        }
+
+        ArchipelagoManager.Instance.UpdateScene(current, next);
+    }
+
+
     private void Awake()
     {
         try
@@ -164,8 +182,7 @@ public class Plugin : BaseUnityPlugin
             Logger.LogInfo("Loading assets.");
             DifficultyList.Init();
 
-            Logger.LogInfo($"Creating manager.");
-            GameObject manager = new GameObject("Archipelago Manager", typeof(ArchipelagoManager));
+            ArchipelagoManager.LoadAssetBundles();
 
             Logger.LogInfo("Applying patches.");
             try
@@ -211,6 +228,7 @@ public class Plugin : BaseUnityPlugin
 
                 // UI Patches
                 Harmony.CreateAndPatchAll(typeof(LevelManagerPatch));
+                Harmony.CreateAndPatchAll(typeof(UIColorPaletteUpdaterPatch));
             }
             catch(Exception e)
             {
@@ -218,9 +236,11 @@ public class Plugin : BaseUnityPlugin
                 return;
             }
 
+            SceneManager.activeSceneChanged += UpdateScene;
+
             Logger.LogInfo($"Plugin {PluginReleaseInfo.PLUGIN_GUID} is loaded!");
 
-            ArchipelagoManager.Instance.CreateClientAndConnect();
+            // ArchipelagoManager.Instance.CreateClientAndConnect();
         }
         catch(Exception e)
         {

@@ -14,8 +14,7 @@ public class ArchipelagoManager : MonoBehaviour
 
     public bool IsArcadeMenu { get; private set; }
 
-    public AssetBundle UIBundle;
-    public AssetBundle APUIBundle;
+    public static AssetBundle APUIBundle;
 
     public UIManager UIManager;
     public ColorManager ColorManager;
@@ -56,16 +55,21 @@ public class ArchipelagoManager : MonoBehaviour
     }
 
 
-    public void LoadAssetBundles()
+    public static void LoadAssetBundles()
     {
+        if(APUIBundle)
+        {
+            return;
+        }
+
         Plugin.Logger.LogInfo("Loading UI.");
 
         try
         {
             // Load all dependency assets
-            UIBundle = AssetBundle.LoadFromFile(Plugin.UiResourcesBundlePath);
-            UIBundle.LoadAllAssets();
-            UIBundle.Unload(false);
+            AssetBundle uiBundle = AssetBundle.LoadFromFile(Plugin.UiResourcesBundlePath);
+            uiBundle.LoadAllAssets();
+            uiBundle.Unload(false);
 
             APUIBundle = AssetBundle.LoadFromFile(Plugin.ApUiBundlePath);
 
@@ -80,7 +84,7 @@ public class ArchipelagoManager : MonoBehaviour
     }
 
 
-    private void UpdateScene(Scene current, Scene next)
+    public void UpdateScene(Scene current, Scene next)
     {
         IsArcadeMenu = next.name == JeffBezosController.arcadeMenuScene;
         OnSceneLoaded?.Invoke(next);
@@ -97,13 +101,18 @@ public class ArchipelagoManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
-        LoadAssetBundles();
+        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+        gameObject.transform.SetParent(null);
+        DontDestroyOnLoad(gameObject);
 
         ColorManager = gameObject.AddComponent<ColorManager>();
         UIManager = gameObject.AddComponent<UIManager>();
+    }
 
-        SceneManager.activeSceneChanged += UpdateScene;
+
+    private void OnDestroy()
+    {
+        Plugin.Logger.LogWarning("ArchipelagoManager was destroyed!");
     }
 }

@@ -43,10 +43,9 @@ public class UIManager : MonoBehaviour
     {
         Transform screenArea = root.GetChild(1);
         Transform mainScreens = screenArea.GetChild(1);
-        RectTransform mainMenu = (RectTransform)mainScreens.GetChild(1);
+        Transform mainMenu = mainScreens.GetChild(1);
 
-        GameObject connectionScreen = PrefabInitializer.LoadPrefab(ArchipelagoConnectionScreen, Manager.APUIBundle);
-        Instantiate(connectionScreen, mainMenu, false);
+        PrefabInitializer.LoadAndInstantiatePrefab(ArchipelagoConnectionScreen, ArchipelagoManager.APUIBundle, mainMenu);
     }
 
 
