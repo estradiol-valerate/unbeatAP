@@ -19,6 +19,17 @@ public class UIManager : MonoBehaviour
     private ArchipelagoManager Manager => ArchipelagoManager.Instance;
 
 
+    private void SetConnectionInfoAndConnect(APConnectionInfo info)
+    {
+        if(!int.TryParse(info.port, out int port))
+        {
+            port = 0;
+        }
+        Plugin.SetConnectionInfo(info.ip, port, info.slot, info.pass);
+        Manager.CreateClientAndConnect();
+    }
+
+
     private void InitArcadeUIConnected(Transform root)
     {
         Transform screenArea = root.GetChild(1);
@@ -47,12 +58,11 @@ public class UIManager : MonoBehaviour
         Transform mainMenu = mainScreens.GetChild(1);
 
         GameObject connectObject = PrefabInitializer.LoadAndInstantiatePrefab(ArchipelagoConnectionScreen, ArchipelagoManager.APUIBundle, mainMenu);
-        APConnectionScreen connectSreen = connectObject.GetComponent<APConnectionScreen>();
-        connectSreen.OnConnect.AddListener(() =>
-        {
-            Plugin.Logger.LogInfo(connectSreen.GetConnectionInfo().ip);
-            ArchipelagoManager.Instance.CreateClientAndConnect();
-        });
+        APConnectionScreen connectScreen = connectObject.GetComponent<APConnectionScreen>();
+
+        connectScreen.FindValues();
+        connectScreen.SetConnectionInfo(Plugin.GetConnectionInfo());
+        connectScreen.OnConnect.AddListener(() => SetConnectionInfoAndConnect(connectScreen.GetConnectionInfo()));
     }
 
 

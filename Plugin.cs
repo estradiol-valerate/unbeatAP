@@ -10,6 +10,7 @@ using UNBEATAP.Traps;
 using UnityEngine;
 using UNBEATAP.Objects;
 using UnityEngine.SceneManagement;
+using UBUI.Archipelago;
 
 namespace UNBEATAP;
 
@@ -79,6 +80,27 @@ public class Plugin : BaseUnityPlugin
     }
 
 
+    public static void SetConnectionInfo(string ip, int port, string slot, string password)
+    {
+        configIp.Value = ip;
+        configPort.Value = port;
+        configSlot.Value = slot;
+        configPassword.Value = password;
+    }
+
+
+    public static APConnectionInfo GetConnectionInfo()
+    {
+        return new APConnectionInfo
+        {
+            ip = configIp.Value,
+            port = configPort.Value.ToString(),
+            slot = configSlot.Value,
+            pass = configPassword.Value
+        };
+    }
+
+
     private void LoadConfig()
     {
         configDeathLink = Config.Bind(
@@ -119,27 +141,26 @@ public class Plugin : BaseUnityPlugin
             5,
             "When connecting to Archipelago, some of your save files are backed up in case of an error. This adjusts how many backups to save before the oldest is deleted."
         );
-
         configIp = Config.Bind(
-            "Connection",
+            "Other",
             "IP",
             "archipelago.gg",
             "The archipelago server IP to connect to. If you're running the game on the official website, this is probably 'archipelago.gg'.\n(This is set automatically by the in-game UI)"
         );
         configPort = Config.Bind(
-            "Connection",
+            "Other",
             "Port",
             58008,
             "The port to connect to. This is all the numbers after the ':' in the IP.\n(This is set automatically by the in-game UI)"
         );
         configSlot = Config.Bind(
-            "Connection",
+            "Other",
             "Slot",
             "Player1",
             "The player slot name to connect with. Enter what you set 'name' to in your YAML.\n(This is set automatically by the in-game UI)"
         );
         configPassword = Config.Bind(
-            "Connection",
+            "Other",
             "Password",
             "",
             "The password to use when connecting. If the server has no password, leave this empty.\n(This is set automatically by the in-game UI)"
